@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Connection Lost 📵</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06201f;
+    --bg-2:#0a2e2c;
+    --cyan:#2dd4ef;
+    --coral:#ff6f91;
+    --cream:#eafffb;
+    --muted:#8fb8b4;
+    --card:rgba(234,255,251,0.055);
+    --border:rgba(45,212,239,0.22);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Baloo 2', sans-serif;
+    background:
+      radial-gradient(circle at 12% 10%, #0d3b38 0%, transparent 48%),
+      radial-gradient(circle at 90% 85%, #1a2f4a 0%, transparent 50%),
+      linear-gradient(165deg, var(--bg), var(--bg-2));
+    color:var(--cream); min-height:100vh; overflow-x:hidden; position:relative;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .mono{font-family:'Space Mono',monospace;}
+  #confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:1;}
+  .wrap{max-width:560px; margin:0 auto; padding:56px 22px 50px; position:relative; z-index:2;}
+
+  /* ---------- phone status bar ---------- */
+  .statusbar{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 16px; border:1px solid var(--border); border-radius:14px;
+    background:var(--card); backdrop-filter:blur(10px); margin-bottom:46px;
+    font-family:'Space Mono',monospace; font-size:11.5px; color:var(--muted);
+  }
+  .bars{display:flex; align-items:flex-end; gap:2px; height:12px;}
+  .bars .bar{width:3px; background:var(--muted); border-radius:1px;}
+  .bars .bar:nth-child(1){height:30%;} .bars .bar:nth-child(2){height:55%;}
+  .bars .bar:nth-child(3){height:75%;} .bars .bar:nth-child(4){height:100%;}
+  .bars.active .bar{background:var(--cyan); transition:background .3s ease;}
+  .left-group{display:flex; align-items:center; gap:8px;}
+
+  /* ---------- view 1: no signal ---------- */
+  #screen1{text-align:center;}
+  .no-signal-icon{font-size:56px; margin-bottom:18px; opacity:0; animation:fadeIn .7s ease forwards .1s;}
+  h1{font-size:clamp(1.7rem,7vw,2.5rem); font-weight:800; line-height:1.2; margin-bottom:14px; opacity:0; animation:fadeUp .7s ease forwards .2s;}
+  .subtext{color:var(--muted); font-size:1rem; line-height:1.75; max-width:440px; margin:0 auto 34px; opacity:0; animation:fadeUp .7s ease forwards .4s;}
+  @keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+
+  .errorlog{
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:20px 20px; margin-bottom:34px; text-align:left;
+    opacity:0; animation:fadeUp .7s ease forwards .6s;
+  }
+  .errorlog .log-title{font-family:'Space Mono',monospace; font-size:11px; color:var(--coral); margin-bottom:12px;}
+  .errorlog .log-line{font-family:'Space Mono',monospace; font-size:12.5px; color:var(--muted); line-height:2; padding-left:14px; position:relative;}
+  .errorlog .log-line::before{content:'✕'; position:absolute; left:0; color:var(--coral);}
+
+  #reconnectBtn{
+    background:linear-gradient(100deg, var(--cyan), var(--coral));
+    border:none; color:#06201f; font-weight:800; font-size:15px;
+    padding:16px 36px; border-radius:999px; cursor:pointer;
+    box-shadow:0 14px 34px rgba(45,212,239,0.25);
+    transition:transform .18s ease, box-shadow .18s ease, opacity .3s ease;
+    opacity:0; animation:fadeIn .7s ease forwards .8s;
+  }
+  #reconnectBtn:hover{transform:translateY(-2px) scale(1.02);}
+  #reconnectBtn:disabled{opacity:.6; cursor:default;}
+
+  /* ---------- view 2: syncing ---------- */
+  #screen2{display:none; text-align:center;}
+  #screen2.show{display:block; animation:fadeIn .4s ease;}
+  .sync-ring{
+    width:90px; height:90px; margin:0 auto 24px; border-radius:50%;
+    border:4px solid rgba(45,212,239,0.2); border-top-color:var(--cyan);
+    animation:spin 1s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .sync-text{font-family:'Space Mono',monospace; font-size:13px; color:var(--muted); margin-bottom:8px;}
+  .sync-bar-track{width:100%; max-width:360px; margin:18px auto 0; height:8px; border-radius:999px; background:rgba(45,212,239,0.15); overflow:hidden;}
+  .sync-bar-fill{height:100%; width:0%; background:linear-gradient(90deg, var(--cyan), var(--coral)); border-radius:999px; transition:width 2.6s cubic-bezier(.3,.6,.3,1);}
+
+  /* ---------- view 3: step-by-step reconnection log ---------- */
+  #screen3{display:none; text-align:center;}
+  #screen3.show{display:block; animation:fadeIn .4s ease;}
+  .step-eyebrow{font-family:'Space Mono',monospace; font-size:11.5px; color:var(--cyan); margin-bottom:16px;}
+  .step-bars{display:flex; gap:3px; margin-bottom:16px; flex-wrap:wrap;}
+  .step-bars .bar2{flex:1; min-width:5px; height:4px; border-radius:999px; background:rgba(45,212,239,0.15); overflow:hidden; position:relative;}
+  .step-bars .bar2.done{background:linear-gradient(90deg, var(--cyan), var(--coral));}
+  .step-bars .bar2.current{background:rgba(45,212,239,0.15);}
+  .step-bars .bar2.current::after{content:''; position:absolute; inset:0; background:linear-gradient(90deg, var(--cyan), var(--coral)); animation:barFill2 2.2s linear forwards;}
+  @keyframes barFill2{from{width:0%;} to{width:100%;}}
+  .step-card{
+    background:var(--card); border:1px solid var(--border); border-radius:18px;
+    padding:38px 24px; min-height:170px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; text-align:center; gap:10px;
+    cursor:pointer; user-select:none; box-shadow:0 20px 50px rgba(0,0,0,0.3);
+  }
+  .step-card p{font-size:16.5px; line-height:1.7; color:var(--cream); max-width:480px; animation:fadeIn .3s ease; font-weight:500;}
+  .step-card .tap-hint2{font-family:'Space Mono',monospace; font-size:10.5px; color:var(--muted); margin-top:4px;}
+  #stepNextBtn{
+    display:block; margin:18px auto 0;
+    background:linear-gradient(100deg, var(--cyan), var(--coral));
+    border:none; color:#06201f; font-weight:800; font-size:14px;
+    padding:13px 30px; border-radius:999px; cursor:pointer;
+    box-shadow:0 14px 30px rgba(45,212,239,0.22); font-family:'Space Mono',monospace;
+    transition:transform .18s ease;
+  }
+  #stepNextBtn:hover{transform:translateY(-2px) scale(1.02);}
+  #stepNextBtn:disabled{opacity:.6; cursor:default; transform:none;}
+
+  /* ---------- view 4: reconnected / message ---------- */
+  #screen4msg{display:none;}
+  #screen4msg.show{display:block; animation:fadeUp .6s ease;}
+  .connected-badge{
+    text-align:center; font-family:'Space Mono',monospace; font-size:12px; color:var(--cyan);
+    margin-bottom:18px; letter-spacing:0.3px;
+  }
+  .msg-card{
+    background:var(--card); border:1px solid var(--border); border-radius:20px;
+    padding:30px 26px; margin-bottom:22px;
+  }
+  .msg-card h2{font-size:1.2rem; margin-bottom:12px; font-weight:700; text-align:center;}
+  .msg-card p{color:var(--muted); line-height:1.85; font-size:0.98rem; margin-bottom:14px;}
+  .msg-card p:last-child{margin-bottom:0;}
+  .msg-card .highlight{color:var(--cream); font-weight:600;}
+
+  .data-stat{
+    display:flex; justify-content:space-between; background:var(--card); border:1px solid var(--border);
+    border-radius:14px; padding:14px 18px; margin-bottom:22px; font-family:'Space Mono',monospace; font-size:12px;
+  }
+  .data-stat div{text-align:center;}
+  .data-stat .label{color:var(--muted); display:block; margin-bottom:4px;}
+  .data-stat .value{color:var(--cyan); font-weight:700; font-size:14px;}
+
+  #acceptBtn{
+    display:block; width:100%; background:linear-gradient(100deg, var(--coral), var(--cyan));
+    border:none; color:#06201f; font-weight:800; font-size:15px;
+    padding:16px; border-radius:999px; cursor:pointer;
+    box-shadow:0 14px 34px rgba(255,111,145,0.25);
+    transition:transform .18s ease, opacity .3s ease; font-family:'Baloo 2',sans-serif;
+  }
+  #acceptBtn:hover{transform:translateY(-2px) scale(1.01);}
+  #acceptBtn:disabled{opacity:.6; cursor:default; transform:none;}
+
+  /* ---------- view 5: final celebration ---------- */
+  #screen5{display:none; text-align:center;}
+  #screen5.show{display:block; animation:fadeUp .6s ease;}
+  .big-emoji{font-size:44px; margin-bottom:14px;}
+  #screen5 h2{font-size:1.5rem; margin-bottom:12px; font-weight:800;}
+  #screen5 p{color:var(--muted); line-height:1.8; max-width:430px; margin:0 auto; font-size:1rem;}
+
+  footer{text-align:center; margin-top:40px; padding-top:20px; border-top:1px solid var(--border); font-family:'Space Mono',monospace; font-size:11px; color:var(--muted);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+<div class="wrap">
+
+  <div class="statusbar">
+    <div class="left-group">
+      <div class="bars" id="statusBars"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      <span id="statusText">no signal</span>
+    </div>
+    <span id="statusRight">friendship.network</span>
+  </div>
+
+  <!-- screen 1: no signal -->
+  <div id="screen1">
+    <div class="no-signal-icon">📵</div>
+    <h1>Connection Lost</h1>
+    <p class="subtext">Lagta hai hamari dosti ka network thoda down hai. Par koi baat nahi — signal wapis laane ki koshish chal rahi hai 👇</p>
+
+    <div class="errorlog">
+      <div class="log-title mono">// error log</div>
+      <div class="log-line">baat baat pe lad padna</div>
+      <div class="log-line">sorry bolne mein ego aa jaana</div>
+      <div class="log-line">faaltu baatein kisi aur ko sunana (tried, failed miserably)</div>
+    </div>
+
+    <button id="reconnectBtn">🔄 Reconnect Karein</button>
+  </div>
+
+  <!-- screen 2: syncing -->
+  <div id="screen2">
+    <div class="sync-ring"></div>
+    <div class="sync-text mono" id="syncStep">searching for signal...</div>
+    <div class="sync-bar-track"><div class="sync-bar-fill" id="syncFill"></div></div>
+  </div>
+
+  <!-- screen 3: step-by-step reconnection log (28+ steps) -->
+  <div id="screen3">
+    <div class="step-eyebrow mono">// reconnection log — tap through</div>
+    <div class="step-bars" id="stepBars"></div>
+    <div class="step-card" id="stepCard">
+      <p id="stepText">loading...</p>
+      <div class="tap-hint2 mono">card pe bhi tap kar sakte ho ⤵</div>
+    </div>
+    <button id="stepNextBtn">Agla ⏭</button>
+  </div>
+
+  <!-- screen 4: message -->
+  <div id="screen4msg">
+    <div class="connected-badge mono">● signal restored — 1 new message</div>
+
+    <div class="msg-card">
+      <h2>Sorry, sach mein 🥺</h2>
+      <p>Pata hai main har baar lad jaati hoon. Kabhi baat ka bagh bana deti hoon, kabhi khud hi gussa ho jaati hoon. Lekin sach yeh hai — <span class="highlight">agar hum baat nahi karenge toh meri faaltu baatein kisi ko sunaaun?</span> Tumhare alawa itni patience se koi nahi sunta.</p>
+      <p>Humara connection kabhi "low battery" pe nahi jaana chahiye. Data limited ho sakta hai, hamari dosti nahi — woh toh hamesha <span class="highlight">unlimited package</span> wali honi chahiye.</p>
+      <p>Toh please — ek baar fir se connect ho jao mujhse. Promise, is baar main thodi kam ladungi (thodi hi, bohot zyada nahi 😅)</p>
+    </div>
+
+    <div class="data-stat">
+      <div><span class="label">SIGNAL</span><span class="value">WEAK</span></div>
+      <div><span class="label">DATA LEFT</span><span class="value">UNLIMITED ❤</span></div>
+      <div><span class="label">STATUS</span><span class="value">PENDING</span></div>
+    </div>
+
+    <button id="acceptBtn">💞 Reconnection Accept Karein</button>
+  </div>
+
+  <!-- screen 5: celebration -->
+  <div id="screen5">
+    <div class="big-emoji">💚📶💌</div>
+    <h2>Connected!</h2>
+    <p>Signal full bars pe aa gaya. Ab chalo, meri agli faaltu baat sunne ke liye taiyyar ho jao — pookie bestie 🫶</p>
+  </div>
+
+  <footer>made with a weak signal &amp; a lot of love</footer>
+</div>
+
+<script>
+const screen1 = document.getElementById('screen1');
+const screen2 = document.getElementById('screen2');
+const screen3 = document.getElementById('screen3');
+const screen4msg = document.getElementById('screen4msg');
+const screen5 = document.getElementById('screen5');
+const statusBars = document.getElementById('statusBars');
+const statusText = document.getElementById('statusText');
+const reconnectBtn = document.getElementById('reconnectBtn');
+const syncStep = document.getElementById('syncStep');
+const syncFill = document.getElementById('syncFill');
+const acceptBtn = document.getElementById('acceptBtn');
+
+const syncMessages = ["searching for signal...", "found a familiar connection...", "exchanging old memories...", "syncing inside jokes...", "almost there..."];
+
+/* 28-step reconnection log — tap through before the full message */
+const reconnectSteps = [
+  "Signal weak hai, lekin dosti ka connection hamesha strong raha hai",
+  "Pehle packet loss hui — thodi si, lekin hui zaroor",
+  "Router restart kiya, phir bhi dil ka connection on hi tha",
+  "WiFi password bhool sakte hain, dosti ka code kabhi nahi bhoolte",
+  "Ping bheja tha, reply late aaya, par bheja zaroor tha",
+  "Data pack khatam ho sakta hai, feelings ka data kabhi khatam nahi hota",
+  "Buffering ho rahi thi baaton mein, connection phir bhi chal raha tha",
+  "Bandwidth kam padi, pyaar kabhi kam nahi pada",
+  "404: sorry message not found... lekin ab mil gaya hai",
+  "Server down tha thodi der ke liye, backup hamesha dil mein tha",
+  "Cache clear kiya purani larai ka, naya session shuru karte hain",
+  "Firewall laga liya tha gusse ka, ab usko hata rahe hain",
+  "Notification mute thi, feelings kabhi mute nahi hui",
+  "Network switch kiya — gusse se seedha pyaar pe",
+  "Hotspot on kiya apni taraf se, tum bhi connect ho jao",
+  "VPN laga ke bhi is dosti ko block nahi kar payi",
+  "Update install ho gaya — version: 'thodi zyada samajhdar'",
+  "Lag itni thi ke message bhejne mein waqt laga, par bheja zaroor",
+  "Screen crash hui gusse se, data loss nahi hua",
+  "Offline mode mein bhi tumhari yaad hamesha online thi",
+  "Auto-reconnect try kar raha tha system khud hi, baar baar",
+  "Backup file mein saari achi yaadein safe pari thi",
+  "System log mein likha hai — tumhare bina sab kuch slow tha",
+  "Notification sound band thi, dil ki ghanti phir bhi bajti rahi",
+  "Storage full ho gaya tha gusse se, sab delete kar diya",
+  "Restart karne ke baad bhi sabse pehla contact tum hi the",
+  "Agar hum baat nahi karenge toh meri faaltu baatein kise sunaaun? Seriously, sochna isko",
+  "Pata hai main har baar lad jaati hoon — par har baar wapis bhi tumhi se aati hoon"
+];
+
+reconnectBtn.addEventListener('click', ()=>{
+  reconnectBtn.disabled = true;
+  screen1.style.display = 'none';
+  screen2.style.display = 'block';
+  screen2.classList.add('show');
+  statusText.textContent = 'connecting...';
+
+  let step = 0;
+  const stepInterval = setInterval(()=>{
+    step++;
+    if(step < syncMessages.length){ syncStep.textContent = syncMessages[step]; }
+  }, 550);
+
+  setTimeout(()=>{ syncFill.style.width = '100%'; }, 100);
+
+  setTimeout(()=>{
+    clearInterval(stepInterval);
+    statusBars.classList.add('active');
+    statusText.textContent = 'connected';
+    screen2.style.display = 'none';
+    screen3.style.display = 'block';
+    screen3.classList.add('show');
+    startStepper();
+  }, 2900);
+});
+
+function startStepper(){
+  const barsEl = document.getElementById('stepBars');
+  const textEl = document.getElementById('stepText');
+  const nextBtn = document.getElementById('stepNextBtn');
+  const cardEl = document.getElementById('stepCard');
+  let current = 0;
+
+  reconnectSteps.forEach(()=>{ const b = document.createElement('div'); b.className = 'bar2'; barsEl.appendChild(b); });
+
+  function renderBars(){
+    const bars = barsEl.children;
+    for(let i=0;i<bars.length;i++){
+      bars[i].classList.remove('done','current');
+      if(i < current) bars[i].classList.add('done');
+      else if(i === current) bars[i].classList.add('current');
+    }
+  }
+  function render(){
+    textEl.style.animation = 'none'; void textEl.offsetWidth; textEl.style.animation = 'fadeIn .3s ease';
+    textEl.textContent = reconnectSteps[current];
+    renderBars();
+    nextBtn.textContent = (current === reconnectSteps.length - 1) ? '💌 Message Dekhein' : 'Agla ⏭';
+  }
+  function goNext(){
+    if(current < reconnectSteps.length - 1){ current++; render(); }
+    else{
+      screen3.style.display = 'none';
+      screen4msg.style.display = 'block';
+      screen4msg.classList.add('show');
+    }
+  }
+  render();
+  nextBtn.addEventListener('click', goNext);
+  cardEl.addEventListener('click', goNext);
+}
+
+acceptBtn.addEventListener('click', ()=>{
+  if(acceptBtn.disabled) return;
+  acceptBtn.disabled = true;
+  acceptBtn.textContent = '💞 Connected!';
+  screen4msg.style.display = 'none';
+  screen5.style.display = 'block';
+  screen5.classList.add('show');
+  burstConfetti(window.innerWidth/2, window.innerHeight/3, 130);
+});
+
+/* confetti */
+const canvas = document.getElementById('confetti-canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+let particles = [];
+const confettiColors = ['#2dd4ef','#ff6f91','#eafffb','#8fffe0'];
+function makeParticle(x, y){
+  return { x, y, vx:(Math.random()-0.5)*9, vy:(Math.random()*-9-3), size:Math.random()*6+4,
+    color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+    rot:Math.random()*360, vr:(Math.random()-0.5)*10, life:0, maxLife:95, gravity:0.25 };
+}
+function burstConfetti(x,y,count){ for(let n=0;n<count;n++){ particles.push(makeParticle(x,y)); } }
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.vy += p.gravity*0.1; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life++;
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+    ctx.fillStyle = p.color; ctx.fillRect(-p.size/2,-p.size/4,p.size,p.size/2); ctx.restore();
+  });
+  particles = particles.filter(p=>p.life<p.maxLife && p.y<canvas.height+40);
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>
