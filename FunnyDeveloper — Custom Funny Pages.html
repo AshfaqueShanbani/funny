@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FunnyDeveloper — Custom Funny Pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1b0f2e;
+    --bg-2:#2a1245;
+    --pink:#ff3e9d;
+    --lime:#c6ff3d;
+    --lilac:#f1e9ff;
+    --muted:#b7a8d9;
+    --card:rgba(241,233,255,0.06);
+    --border:rgba(241,233,255,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Baloo 2', sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, #3a1a5c 0%, transparent 45%),
+      radial-gradient(circle at 88% 82%, #4a1540 0%, transparent 50%),
+      linear-gradient(165deg, var(--bg), var(--bg-2));
+    color:var(--lilac);
+    min-height:100vh; overflow-x:hidden; position:relative;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .mono{font-family:'Space Mono',monospace;}
+  .wrap{max-width:900px; margin:0 auto; padding:60px 22px 50px; position:relative; z-index:2;}
+
+  .blob{position:fixed; border-radius:50%; filter:blur(60px); opacity:.35; z-index:0; pointer-events:none;}
+  .b1{width:360px; height:360px; background:var(--pink); top:-100px; left:-100px;}
+  .b2{width:300px; height:300px; background:var(--lime); bottom:-80px; right:-80px;}
+
+  nav{display:flex; justify-content:space-between; align-items:center; margin-bottom:64px;}
+  .logo{display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.2rem;}
+  .logo .tag{background:var(--lime); color:#1b0f2e; font-family:'Space Mono',monospace; font-size:11px; padding:3px 8px; border-radius:6px; font-weight:700;}
+  nav .badge{font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); border:1px solid var(--border); padding:6px 12px; border-radius:999px;}
+
+  .hero{text-align:center; margin-bottom:70px;}
+  .hero .eyebrow{font-family:'Space Mono',monospace; font-size:12.5px; color:var(--lime); letter-spacing:0.4px; margin-bottom:14px;}
+  .hero h1{font-size:clamp(2.1rem,7vw,3.4rem); font-weight:800; line-height:1.15; margin-bottom:18px;}
+  .hero h1 .accent{color:var(--pink);}
+  .hero p{color:var(--muted); font-size:1.05rem; max-width:500px; margin:0 auto 30px; line-height:1.7;}
+  .hero-cta{
+    display:inline-block; background:linear-gradient(100deg, var(--pink), var(--lime));
+    color:#1b0f2e; font-weight:800; padding:15px 32px; border-radius:999px; font-size:15px;
+    box-shadow:0 14px 34px rgba(255,62,157,0.3); cursor:default;
+  }
+
+  .sticker-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:70px;}
+  .sticker{
+    background:var(--card); border:2px solid var(--border); border-radius:22px;
+    padding:28px 20px; text-align:center; position:relative; transition:transform .2s ease, border-color .2s ease;
+  }
+  .sticker:hover{transform:translateY(-4px) rotate(-1deg); border-color:var(--pink);}
+  .sticker .emoji{font-size:38px; margin-bottom:14px; display:block;}
+  .sticker h3{font-size:1.05rem; margin-bottom:8px; font-weight:700;}
+  .sticker p{color:var(--muted); font-size:0.88rem; line-height:1.6; font-family:'Space Mono',monospace;}
+  .sticker .price-tag{
+    position:absolute; top:-10px; right:14px; background:var(--lime); color:#1b0f2e;
+    font-family:'Space Mono',monospace; font-size:10px; font-weight:700; padding:4px 9px; border-radius:999px;
+    transform:rotate(6deg);
+  }
+
+  .how{margin-bottom:70px;}
+  .section-title{text-align:center; font-size:1.5rem; font-weight:800; margin-bottom:34px;}
+  .steps{display:flex; flex-direction:column; gap:14px; max-width:560px; margin:0 auto;}
+  .step{
+    display:flex; align-items:center; gap:16px; background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:16px 20px;
+  }
+  .step .num{
+    width:34px; height:34px; border-radius:50%; background:var(--pink); color:#1b0f2e;
+    display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; font-family:'Space Mono',monospace;
+  }
+  .step p{font-size:0.95rem; color:var(--lilac);}
+  .step span{color:var(--muted); font-size:0.82rem; display:block; margin-top:2px; font-family:'Space Mono',monospace;}
+
+  .promise{
+    background:var(--card); border:1px solid var(--border); border-radius:20px;
+    padding:34px 28px; text-align:center; margin-bottom:60px;
+  }
+  .promise .emoji{font-size:30px; margin-bottom:12px;}
+  .promise h3{font-size:1.15rem; margin-bottom:10px; font-weight:700;}
+  .promise p{color:var(--muted); font-size:0.95rem; line-height:1.7; max-width:480px; margin:0 auto; font-family:'Space Mono',monospace;}
+
+  .cta-final{text-align:center; margin-bottom:30px;}
+  .cta-final h2{font-size:1.4rem; margin-bottom:16px; font-weight:800;}
+  .cta-final .order-btn{
+    display:inline-block; background:linear-gradient(100deg, var(--lime), var(--pink));
+    color:#1b0f2e; font-weight:800; padding:16px 36px; border-radius:999px; font-size:15px;
+    box-shadow:0 14px 34px rgba(198,255,61,0.25); border:none; cursor:pointer;
+    font-family:'Baloo 2', sans-serif; transition:transform .18s ease;
+  }
+  .cta-final .order-btn:hover{transform:translateY(-2px) scale(1.02);}
+  .cta-final .note{margin-top:12px; color:var(--muted); font-size:12px; font-family:'Space Mono',monospace;}
+
+  footer{text-align:center; padding-top:26px; border-top:1px solid var(--border); font-family:'Space Mono',monospace; font-size:11px; color:var(--muted);}
+
+  @media (max-width:640px){
+    .sticker-grid{grid-template-columns:1fr;}
+    nav{flex-direction:column; gap:14px; align-items:flex-start;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+</style>
+</head>
+<body>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+
+<div class="wrap">
+  <nav>
+    <div class="logo">&lt;FunnyDeveloper/&gt; <span class="tag">v1.0</span></div>
+    <div class="badge mono">status: accepting orders</div>
+  </nav>
+
+  <div class="hero">
+    <div class="eyebrow mono">// custom pages that actually get a reaction</div>
+    <h1>Hum funny pages banate hain,<br>jo <span class="accent">kaam</span> kar jaayein.</h1>
+    <p>Birthday surprise ho, manane wala message ho, ya koi bhi mazaak — hum usko ek chhota sa interactive webpage bana dete hain jo dekhne wale ko sach mein pasand aaye.</p>
+    <div class="hero-cta">made for reactions, not just "nice" replies</div>
+  </div>
+
+  <div class="sticker-grid">
+    <div class="sticker">
+      <div class="price-tag">most ordered</div>
+      <span class="emoji">🎂</span>
+      <h3>Birthday Hype Page</h3>
+      <p>Countdown, jokes, cake-cutting animation — sab kuch us insaan ke naam aur style pe customize.</p>
+    </div>
+    <div class="sticker">
+      <span class="emoji">🤝</span>
+      <h3>Sorry / Manao Page</h3>
+      <p>Jab seedhi baat kaam na aaye — ek funny, dil se bana hua "sorry" page jo gussa thanda kar de.</p>
+    </div>
+    <div class="sticker">
+      <span class="emoji">🎉</span>
+      <h3>Random Surprise Page</h3>
+      <p>Koi khaas wajah nahi chahiye — bas kisi ko achha lagane ke liye ek chota sa surprise.</p>
+    </div>
+  </div>
+
+  <div class="how">
+    <div class="section-title">Kaise kaam karta hai</div>
+    <div class="steps">
+      <div class="step">
+        <div class="num mono">1</div>
+        <p>Apni story batayen<span>Kiske liye hai, kya mood hai, kaunse jokes chalenge</span></p>
+      </div>
+      <div class="step">
+        <div class="num mono">2</div>
+        <p>Hum design aur likhte hain<span>Har page us insaan ke hisaab se alag banta hai — copy-paste nahi</span></p>
+      </div>
+      <div class="step">
+        <div class="num mono">3</div>
+        <p>Link milta hai, bas bhej dein<span>Open karte hi animation, jokes aur surprise shuru</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="promise">
+    <div class="emoji">🔒</div>
+    <h3>Sirf content, koi personal detail nahi</h3>
+    <p>Har page sirf us banda/banda-jiske liye bana hai uske liye hota hai — koi extra naam, contact ya detail page pe show nahi hoti. Bas design, jokes aur surprise.</p>
+  </div>
+
+  <div class="cta-final">
+    <h2>Kisi ko manana hai, ya surprise dena hai?</h2>
+    <button class="order-btn">Order Your Page 🚀</button>
+    <div class="note">message bhejein apni details ke saath, page 100% customized banega</div>
+  </div>
+
+  <footer>&lt;FunnyDeveloper/&gt; — pages that get a reaction, not just a reply</footer>
+</div>
+</body>
+</html>
