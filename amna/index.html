@@ -1,0 +1,505 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Happy Birthday Amna 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#0d0d21; --bg-2:#161132;
+    --purple:#8b5cf6; --purple-soft:#c4b5fd;
+    --cyan:#38bdf8; --coral:#fb7185;
+    --text:#f1eefc; --muted:#a79fc9;
+    --card:rgba(241,238,252,0.06); --border:rgba(139,92,246,0.25);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Poppins', sans-serif;
+    background:
+      radial-gradient(circle at 15% 8%, #291a5c 0%, transparent 46%),
+      radial-gradient(circle at 88% 85%, #1a2a52 0%, transparent 50%),
+      linear-gradient(165deg, var(--bg-1), var(--bg-2));
+    color:var(--text); min-height:100vh; overflow-x:hidden; position:relative;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .mono{font-family:'Fira Code',monospace;}
+  #confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:1;}
+  .stars{position:fixed; inset:0; z-index:0; pointer-events:none;}
+  .star{position:absolute; width:2px; height:2px; background:var(--cyan); border-radius:50%; opacity:0.55; animation:twinkle 3s infinite ease-in-out;}
+  @keyframes twinkle{0%,100%{opacity:0.12;} 50%{opacity:0.9;}}
+
+  .balloon{position:fixed; bottom:-120px; z-index:1; pointer-events:none; opacity:0.92; animation:rise linear infinite;}
+  .balloon svg{width:48px; height:66px; filter:drop-shadow(0 8px 12px rgba(0,0,0,0.4));}
+  @keyframes rise{
+    0%{transform:translateY(0) translateX(0) rotate(0deg); opacity:0;}
+    8%{opacity:0.92;}
+    50%{transform:translateY(-55vh) translateX(20px) rotate(6deg);}
+    100%{transform:translateY(-118vh) translateX(-16px) rotate(-6deg); opacity:0;}
+  }
+
+  .wrap{position:relative; z-index:2; max-width:760px; margin:0 auto; padding:58px 22px 40px;}
+
+  nav.toolbar{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:11px 18px; border:1px solid var(--border); border-radius:10px;
+    background:var(--card); backdrop-filter:blur(10px);
+    font-family:'Fira Code',monospace; font-size:11.5px; color:var(--muted);
+    margin-bottom:50px;
+  }
+  nav .dots span{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px;}
+  .dot-red{background:#ff5f56;} .dot-yellow{background:#ffbd2e;} .dot-green{background:#27c93f;}
+  #sound-toggle{
+    background:none; border:1px solid var(--border); color:var(--text);
+    padding:6px 13px; border-radius:10px; font-family:'Fira Code',monospace;
+    font-size:11.5px; cursor:pointer; display:flex; align-items:center; gap:6px;
+    transition:border-color .2s ease, transform .15s ease;
+  }
+  #sound-toggle:hover{border-color:var(--cyan); transform:translateY(-1px);}
+
+  .eyebrow{
+    font-family:'Fira Code',monospace; font-size:12.5px; color:var(--cyan);
+    text-align:center; opacity:0; animation:fadeIn .8s ease forwards .1s;
+  }
+  h1.headline{
+    text-align:center; font-weight:800; line-height:1.14;
+    font-size:clamp(1.9rem, 7.6vw, 3.3rem); margin:14px 0 10px;
+    background:linear-gradient(100deg, var(--purple-soft), var(--cyan) 55%, var(--coral));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    min-height:1.3em;
+  }
+  .cursor{display:inline-block; width:3px; background:var(--cyan); margin-left:3px; animation:blink 0.9s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .subhead{
+    text-align:center; color:var(--muted); font-size:1rem; max-width:500px; margin:0 auto 40px;
+    opacity:0; animation:fadeUp .8s ease forwards .5s; line-height:1.75;
+  }
+  @keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);}}
+
+  .terminal{
+    background:#0a0a1c; border:1px solid var(--border); border-radius:14px;
+    overflow:hidden; margin-bottom:38px; box-shadow:0 20px 50px rgba(0,0,0,0.4);
+    opacity:0; animation:fadeUp .8s ease forwards .7s;
+  }
+  .terminal-head{
+    display:flex; align-items:center; gap:6px; padding:10px 14px;
+    background:#13102b; border-bottom:1px solid var(--border);
+    font-family:'Fira Code',monospace; font-size:11px; color:var(--muted);
+  }
+  .terminal-head .name{margin-left:8px;}
+  .terminal-body{padding:24px 22px; font-family:'Fira Code',monospace; font-size:13.5px; line-height:1.9; color:var(--text);}
+  .terminal-body .cmt{color:#5c5584;}
+  .terminal-body .key{color:var(--cyan);}
+  .terminal-body .str{color:#fcd34d;}
+  .terminal-body .fn{color:var(--coral);}
+
+  .wish-card{
+    background:var(--card); border:1px solid var(--border); border-radius:18px;
+    padding:32px 26px; text-align:center; margin-bottom:40px; backdrop-filter:blur(8px);
+    opacity:0; animation:fadeUp .8s ease forwards 1.05s;
+  }
+  .avatar{
+    width:76px; height:76px; border-radius:50%; margin:0 auto 18px;
+    background:linear-gradient(135deg, var(--purple), var(--cyan));
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; font-weight:800; color:#0d0d21; font-family:'Poppins',sans-serif;
+    box-shadow:0 0 0 4px rgba(139,92,246,0.12);
+  }
+  .wish-card h2{font-size:1.3rem; margin-bottom:10px; font-weight:700;}
+  .wish-card p{color:var(--muted); line-height:1.8; font-size:0.98rem; max-width:540px; margin:0 auto;}
+  .signature{margin-top:16px; font-family:'Fira Code',monospace; font-size:12px; color:var(--cyan);}
+
+  .section-label{font-family:'Fira Code',monospace; font-size:12px; color:var(--cyan); text-align:center; margin-bottom:16px;}
+  .status-wrap{margin-bottom:12px;}
+  .status-bars{display:flex; gap:3px; margin-bottom:14px; flex-wrap:wrap;}
+  .status-bars .bar{flex:1; min-width:5px; height:4px; border-radius:999px; background:rgba(139,92,246,0.15); overflow:hidden; position:relative;}
+  .status-bars .bar.done{background:linear-gradient(90deg, var(--purple), var(--cyan));}
+  .status-bars .bar.current{background:rgba(139,92,246,0.15);}
+  .status-bars .bar.current::after{content:''; position:absolute; inset:0; background:linear-gradient(90deg, var(--purple), var(--cyan)); animation:barFill 2.4s linear forwards;}
+  @keyframes barFill{from{width:0%;} to{width:100%;}}
+
+  .status-card{
+    background:#0a0a1c; border:1px solid var(--border); border-radius:18px;
+    padding:42px 28px; min-height:220px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; text-align:center; gap:12px;
+    cursor:pointer; user-select:none; box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  }
+  .status-card p{font-size:17px; line-height:1.75; color:var(--text); max-width:520px; animation:fadeIn .35s ease; font-weight:500;}
+  .status-card .tap-hint{font-family:'Fira Code',monospace; font-size:11px; color:var(--muted); margin-top:8px;}
+
+  .next-status-btn{
+    display:block; margin:18px auto 0;
+    background:linear-gradient(100deg, var(--purple), var(--cyan));
+    border:none; color:#0d0d21; font-weight:700; font-size:14px;
+    padding:13px 30px; border-radius:999px; cursor:pointer;
+    box-shadow:0 14px 30px rgba(139,92,246,0.28); font-family:'Fira Code',monospace;
+    transition:transform .18s ease, box-shadow .18s ease, opacity .2s ease;
+  }
+  .next-status-btn:hover{transform:translateY(-2px) scale(1.02); box-shadow:0 18px 36px rgba(139,92,246,0.4);}
+  .next-status-btn:active{transform:translateY(0) scale(0.98);}
+  .next-status-btn:disabled{opacity:.6; cursor:default; transform:none;}
+
+  #cutSection{display:none; margin-top:14px;}
+  #cutSection.reveal{display:block; animation:fadeUp .7s ease;}
+  .cut-section{text-align:center; margin-bottom:10px;}
+  .cut-section h2{font-size:1.35rem; margin-bottom:6px; font-weight:700;}
+  .cut-section .cut-sub{color:var(--muted); font-size:0.92rem; margin-bottom:30px; font-family:'Fira Code',monospace;}
+
+  .knife-wrap{position:relative; width:220px; height:190px; margin:0 auto;}
+  .knife{
+    position:absolute; top:-46px; left:50%; font-size:44px; z-index:6;
+    transform:translateX(-50%) rotate(32deg);
+    transition:top .55s cubic-bezier(.45,0,.2,1), transform .55s cubic-bezier(.45,0,.2,1);
+    filter:drop-shadow(0 8px 10px rgba(0,0,0,0.45));
+  }
+  .knife.slice{top:52px; transform:translateX(-50%) rotate(10deg);}
+
+  .cut-cake{position:relative; width:200px; height:150px; margin:0 auto;}
+  .cut-half{position:absolute; inset:0; transition:transform .5s ease .45s, opacity .5s ease .45s;}
+  .cut-half.left{clip-path:polygon(0 0, 50% 0, 50% 100%, 0 100%);}
+  .cut-half.right{clip-path:polygon(50% 0, 100% 0, 100% 100%, 50% 100%);}
+  .cut-cake.cut .cut-half.left{transform:translate(-16px, 2px) rotate(-4deg);}
+  .cut-cake.cut .cut-half.right{transform:translate(16px, 2px) rotate(4deg);}
+
+  .plate{position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:210px; height:14px; background:linear-gradient(180deg,#372a68,#191333); border-radius:50%; box-shadow:0 10px 24px rgba(0,0,0,0.4);}
+  .tier{position:absolute; left:50%; transform:translateX(-50%); border-radius:10px;}
+  .tier.bottom{bottom:14px; width:180px; height:52px; background:linear-gradient(160deg,#8b5cf6,#5b3aa8); border:1px solid var(--border);}
+  .tier.top{bottom:60px; width:130px; height:44px; background:linear-gradient(160deg,#a78bfa,#6d4cc4); border:1px solid var(--border);}
+  .drip{position:absolute; left:50%; transform:translateX(-50%); bottom:100px; width:130px; height:16px; background:linear-gradient(180deg, var(--cyan), transparent); border-radius:0 0 40px 40px; opacity:.85;}
+  .candle{position:absolute; bottom:104px; width:6px; height:34px; background:linear-gradient(180deg,#fff,#c4b5fd); border-radius:2px;}
+  .candle.c1{left:78px;} .candle.c2{left:97px;} .candle.c3{left:116px;}
+  .flame{position:absolute; top:-16px; left:50%; transform:translateX(-50%); width:10px; height:16px; border-radius:50% 50% 50% 50%/60% 60% 40% 40%; background:radial-gradient(circle at 50% 30%, #fff5c4, #fcd34d 60%, #fb7185); box-shadow:0 0 14px 4px rgba(252,211,77,.5); animation:flicker 1s infinite ease-in-out; transform-origin:bottom center; transition:opacity .3s ease;}
+  @keyframes flicker{0%,100%{transform:translateX(-50%) scale(1) rotate(-2deg);} 50%{transform:translateX(-50%) scale(1.12) rotate(3deg);}}
+  .cut-cake.cut .flame{opacity:0;}
+
+  #cutBtn{
+    margin-top:26px;
+    background:linear-gradient(100deg, var(--purple), var(--cyan));
+    border:none; color:#0d0d21; font-weight:700; font-size:15px;
+    padding:15px 34px; border-radius:999px; cursor:pointer;
+    box-shadow:0 14px 30px rgba(139,92,246,0.28); font-family:'Fira Code',monospace;
+    transition:transform .18s ease, box-shadow .18s ease, opacity .3s ease;
+  }
+  #cutBtn:hover{transform:translateY(-2px) scale(1.02); box-shadow:0 18px 36px rgba(139,92,246,0.4);}
+  #cutBtn:active{transform:translateY(0) scale(0.98);}
+  #cutBtn:disabled{cursor:default; opacity:0.75; transform:none;}
+
+  .final-msg{
+    max-width:560px; margin:28px auto 0; background:var(--card); border:1px solid var(--border);
+    border-radius:18px; padding:30px 26px; backdrop-filter:blur(8px);
+    opacity:0; transform:translateY(16px) scale(.97); transition:opacity .6s ease, transform .6s ease;
+  }
+  .final-msg.show{opacity:1; transform:translateY(0) scale(1);}
+  .final-msg .emoji-row{font-size:26px; margin-bottom:10px; letter-spacing:6px;}
+  .final-msg h3{font-size:1.2rem; margin-bottom:10px;}
+  .final-msg p{color:var(--muted); line-height:1.75; font-size:0.95rem;}
+
+  footer{text-align:center; margin-top:50px; padding-top:22px; border-top:1px solid var(--border); font-family:'Fira Code',monospace; font-size:12px; color:var(--muted);}
+  footer .heart{color:var(--coral);}
+
+  @media (max-width:420px){
+    .wrap{padding:44px 16px 30px;}
+    .terminal-body{font-size:12.5px;}
+    .status-card{padding:32px 20px; min-height:200px;}
+    .status-card p{font-size:15.5px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+<div class="stars" id="stars"></div>
+<div id="balloons"></div>
+
+<div class="wrap">
+
+  <nav class="toolbar">
+    <div class="dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span> amna.dev — running</div>
+    <button id="sound-toggle" aria-pressed="false">🔈 <span id="sound-label">sound: off</span></button>
+  </nav>
+
+  <div class="eyebrow mono">10 October // team.celebrate(amna)</div>
+  <h1 class="headline" id="typed-heading"><span id="typed-text"></span><span class="cursor"></span></h1>
+  <p class="subhead">Ek din jo sirf iss liye bana hai ke poori team milke keh sake — hamari frontend intern jitni talented hai, utni hi pyaari bhi hai. 💜</p>
+
+  <div class="terminal">
+    <div class="terminal-head">
+      <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+      <span class="name">birthday.js</span>
+    </div>
+    <div class="terminal-body">
+<span class="cmt">// Amna — Frontend Developer Intern, official birthday build</span><br>
+<span class="key">const</span> <span class="fn">amna</span> = {<br>
+&nbsp;&nbsp;role: <span class="str">"Frontend Developer Intern"</span>,<br>
+&nbsp;&nbsp;skills: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>, <span class="str">"JavaScript"</span>, <span class="str">"React"</span>],<br>
+&nbsp;&nbsp;bugs_today: <span class="str">0</span>, <span class="cmt">// birthday mode: bug-free</span><br>
+&nbsp;&nbsp;energy: <span class="str">"main character"</span>,<br>
+&nbsp;&nbsp;growth: <span class="str">"exponential"</span><br>
+};<br><br>
+<span class="cmt">// deploying good vibes to production</span><br>
+<span class="fn">console</span>.log(<span class="str">"Happy Birthday Amna! Status: LEGEND 🎉"</span>);
+    </div>
+  </div>
+
+  <div class="wish-card">
+    <div class="avatar">A</div>
+    <h2>Poori team ki taraf se, dil se</h2>
+    <p>Amna, itne kam waqt mein tumne jo mehnat aur talent dikhaya hai, wo kaabil-e-tareef hai. Tumhara frontend ka kaam sirf functional nahi, khoobsurat bhi hota hai — aur ye combination bohot kam logon mein milta hai. Tumhari seekhne ki lagan aur positive energy ne team ko bhi better bana diya hai. Umeed hai yeh saal tumhare liye naye skills, achay opportunities aur bohot saari khushiyan lekar aaye. Happy Birthday, hamari talented Frontend Developer! 🎉💻</p>
+    <div class="signature">— poori team ki taraf se, with respect and best wishes</div>
+  </div>
+
+  <div class="section-label mono">// tap next to see all birthday statuses</div>
+  <div class="status-wrap">
+    <div class="status-bars" id="realBars"></div>
+    <div class="status-card" id="realCard">
+      <p id="realText">loading...</p>
+      <div class="tap-hint">card pe bhi tap kar sakte ho ⤵</div>
+    </div>
+    <button class="next-status-btn" id="realNextBtn">Agla ⏭</button>
+  </div>
+
+  <div id="cutSection">
+    <div class="cut-section">
+      <h2>Ab cake cutting ka time hai, Amna 🔪🎂</h2>
+      <div class="cut-sub mono">neeche button dabayen aur apna digital cake cut karein</div>
+
+      <div class="knife-wrap">
+        <div class="knife" id="knife">🔪</div>
+        <div class="cut-cake" id="cutCake">
+          <div class="cut-half left">
+            <div class="drip"></div>
+            <div class="candle c1"><div class="flame"></div></div>
+            <div class="candle c2"><div class="flame"></div></div>
+            <div class="candle c3"><div class="flame"></div></div>
+            <div class="tier top"></div>
+            <div class="tier bottom"></div>
+          </div>
+          <div class="cut-half right">
+            <div class="drip"></div>
+            <div class="candle c1"><div class="flame"></div></div>
+            <div class="candle c2"><div class="flame"></div></div>
+            <div class="candle c3"><div class="flame"></div></div>
+            <div class="tier top"></div>
+            <div class="tier bottom"></div>
+          </div>
+          <div class="plate"></div>
+        </div>
+      </div>
+
+      <button id="cutBtn">🔪 Cake Cut Karein</button>
+
+      <div class="final-msg" id="finalMsg">
+        <div class="emoji-row">🎂🎉💻</div>
+        <h3>Deploy successful, Amna!</h3>
+        <p>Yeh pehla slice tumhare naye saal ki shuruwat hai — sweet, well-earned aur bilkul tumhari tarah talented. Umeed hai yeh saal tumhare liye naye projects, achay results aur career mein bohot saari kaamyabiyan lekar aaye. Happy Birthday once again, Amna! 💜✨</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>Made with 💜 &amp; <span class="heart">❤</span> &amp; ek cup chai, for our talented Frontend Developer — Amna</footer>
+</div>
+
+<script>
+/* typing effect */
+function typeInto(el, text, speed, startDelay){
+  let idx = 0;
+  setTimeout(function step(){
+    if(idx <= text.length){ el.textContent = text.slice(0, idx); idx++; setTimeout(step, speed); }
+  }, startDelay);
+}
+typeInto(document.getElementById('typed-text'), "Happy Birthday Amna 🎉", 65, 300);
+
+/* stars */
+const starsWrap = document.getElementById('stars');
+for(let s=0; s<60; s++){
+  const st = document.createElement('div');
+  st.className = 'star';
+  st.style.left = Math.random()*100 + '%';
+  st.style.top = Math.random()*100 + '%';
+  st.style.animationDelay = (Math.random()*3) + 's';
+  starsWrap.appendChild(st);
+}
+
+/* balloons */
+const balloonColors = [
+  ['#8b5cf6','#c4b5fd'], ['#38bdf8','#7dd3fc'], ['#fb7185','#fda4af'], ['#fcd34d','#fde68a']
+];
+const balloonWrap = document.getElementById('balloons');
+function spawnBalloon(){
+  const b = document.createElement('div');
+  b.className = 'balloon';
+  const [c1,c2] = balloonColors[Math.floor(Math.random()*balloonColors.length)];
+  b.style.left = Math.random()*94 + 'vw';
+  const dur = 8 + Math.random()*6;
+  b.style.animationDuration = dur + 's';
+  b.innerHTML = `<svg viewBox="0 0 46 64"><ellipse cx="23" cy="24" rx="21" ry="24" fill="${c1}"/><ellipse cx="16" cy="16" rx="6" ry="8" fill="${c2}" opacity="0.6"/><line x1="23" y1="48" x2="23" y2="62" stroke="#a79fc9" stroke-width="1.5"/></svg>`;
+  balloonWrap.appendChild(b);
+  setTimeout(()=> b.remove(), dur*1000 + 500);
+}
+for(let k=0;k<6;k++) setTimeout(spawnBalloon, k*700);
+setInterval(spawnBalloon, 1400);
+
+/* confetti */
+const canvas = document.getElementById('confetti-canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+let particles = [];
+const confettiColors = ['#8b5cf6','#38bdf8','#fb7185','#fcd34d'];
+function makeParticle(x, y, burst){
+  return { x, y,
+    vx: (Math.random()-0.5) * (burst ? 9 : 2),
+    vy: burst ? (Math.random()*-9 - 3) : (Math.random()*1.5 + 1),
+    size: Math.random()*6 + 4, color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+    rot: Math.random()*360, vr: (Math.random()-0.5) * 10, life: 0,
+    maxLife: burst ? 90 : 420, gravity: burst ? 0.25 : 0.05 };
+}
+function ambientSpawn(){ if(particles.length < 90){ particles.push(makeParticle(Math.random()*canvas.width, -10, false)); } }
+setInterval(ambientSpawn, 250);
+function burstConfetti(x, y, count){ for(let n=0;n<count;n++){ particles.push(makeParticle(x, y, true)); } }
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.vy += p.gravity * 0.1; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life++;
+    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI/180);
+    ctx.fillStyle = p.color; ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2); ctx.restore();
+  });
+  particles = particles.filter(p => p.life < p.maxLife && p.y < canvas.height + 40);
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* frontend-dev birthday jokes — 28 steps */
+const jokes = [
+  "Happy Birthday Amna! Aaj ke din koi bug fix karna mana hai 🐛🚫",
+  "CSS centering itni mushkil hai, lekin Amna ka kaam hamesha perfectly aligned hota hai",
+  "Aaj console mein sirf ek hi log honi chahiye: 'Happy Birthday Amna!' 🎉",
+  "Git commit message of the day: 'fixed a bug, added one more candle'",
+  "Amna ke code reviews itne clean hote hain, Prettier bhi inspire hota hai",
+  "Internship mein itna seekha hai ke senior devs bhi 'nice catch' bolte hain",
+  "Pixel-perfect design banane wali, aaj khud pixel-perfect celebration deserve karti hai",
+  "Jitni fast tumhari React components render hoti hain, utni hi fast tumhari growth hui hai",
+  "Browser compatibility test karte karte bhi mood hamesha fresh rehta hai 😄",
+  "Happy Birthday us dev ko jo bugs dhoondhti hai, khud kabhi complain nahi karti",
+  "Tumhara UI sense itna sharp hai, designers bhi double-check kar lete hain",
+  "Stack Overflow pe kam, apne dimaag pe zyada bharosa — that's Amna energy",
+  "Deadline ho ya na ho, tumhara code hamesha production-ready lagta hai",
+  "Aaj ke din hum sab milke declare karte hain: Amna.exe is a team treasure 💻",
+  "Tumhari dedication dekh kar lagta hai internship nahi, masterclass chal rahi hai",
+  "Jitni patience tumhari debugging mein hai, utni hi patience hum sabko chahiye",
+  "Tumhara code review comment bhi itna polite hota hai, feedback bhi pyaara lagta hai",
+  "Happy Birthday — aaj se tumhara version update ho gaya, aur bhi better 🚀",
+  "Tumhari UI animations itni smooth hain, jitni tumhari team ke saath dosti",
+  "Har standup meeting mein tumhara update sunke lagta hai sab kuch under control hai",
+  "Internship ke itne kam din mein itna impress kar diya, jaise fast-forward button dabaya ho",
+  "Tumhare saath kaam karna itna easy hai, jaise well-documented codebase ke saath kaam karna",
+  "Figma se code tak ka safar tumne itni khoobsurati se kiya hai",
+  "Aaj ka pull request: 'Added one year of awesomeness to Amna' — approved by everyone 🎂",
+  "Tumhari growth ka graph bhi ek perfectly optimized curve jaisa hai",
+  "Team mein tumhara hona matlab har project thoda zyada organized ho jata hai",
+  "Happy Birthday us talented dev ko jo kaam bhi karti hai aur sabko hansati bhi hai",
+  "Final deploy: Amna's Birthday — status: successfully celebrated 🎉"
+];
+
+/* status stepper */
+function makeStepper(opts){
+  const { barsEl, textEl, nextBtn, cardEl, jokes, onFinish, finishLabel } = opts;
+  let current = 0;
+  function buildBars(){
+    barsEl.innerHTML = '';
+    jokes.forEach(()=>{ const bar = document.createElement('div'); bar.className = 'bar'; barsEl.appendChild(bar); });
+  }
+  function renderBars(){
+    const bars = barsEl.children;
+    for(let idx=0; idx<bars.length; idx++){
+      bars[idx].classList.remove('done','current');
+      if(idx < current) bars[idx].classList.add('done');
+      else if(idx === current) bars[idx].classList.add('current');
+    }
+  }
+  function render(){
+    textEl.style.animation = 'none'; void textEl.offsetWidth; textEl.style.animation = 'fadeIn .35s ease';
+    textEl.textContent = jokes[current]; renderBars();
+    nextBtn.textContent = (current === jokes.length - 1) ? finishLabel : 'Agla ⏭';
+  }
+  function goNext(){
+    if(current < jokes.length - 1){ current++; render(); } else { onFinish(); }
+  }
+  buildBars(); render();
+  nextBtn.addEventListener('click', goNext);
+  cardEl.addEventListener('click', goNext);
+}
+
+const cutSection = document.getElementById('cutSection');
+makeStepper({
+  barsEl: document.getElementById('realBars'),
+  textEl: document.getElementById('realText'),
+  nextBtn: document.getElementById('realNextBtn'),
+  cardEl: document.getElementById('realCard'),
+  jokes: jokes,
+  finishLabel: '🎂 Chalo Cake Cutting Karte Hain',
+  onFinish: ()=>{
+    cutSection.style.display = 'block';
+    cutSection.classList.add('reveal');
+    document.getElementById('realNextBtn').disabled = true;
+    setTimeout(()=>{ cutSection.scrollIntoView({behavior:'smooth', block:'start'}); }, 150);
+  }
+});
+
+/* cake cutting */
+const knife = document.getElementById('knife');
+const cutCake = document.getElementById('cutCake');
+const cutBtn = document.getElementById('cutBtn');
+const finalMsg = document.getElementById('finalMsg');
+cutBtn.addEventListener('click', () => {
+  if(cutBtn.disabled) return;
+  cutBtn.disabled = true;
+  cutBtn.textContent = '🎂 Cake Cut Ho Gaya!';
+  knife.classList.add('slice');
+  setTimeout(() => {
+    cutCake.classList.add('cut');
+    const rect = cutCake.getBoundingClientRect();
+    burstConfetti(rect.left + rect.width/2, rect.top + 30, 110);
+  }, 500);
+  setTimeout(() => {
+    finalMsg.classList.add('show');
+    finalMsg.scrollIntoView({behavior:'smooth', block:'center'});
+  }, 1050);
+});
+
+/* sound toggle */
+const soundBtn = document.getElementById('sound-toggle');
+const soundLabel = document.getElementById('sound-label');
+let audioCtx = null, playing = false, tuneTimeout = null;
+const notes = [523.25,523.25,587.33,523.25,698.46,659.25,523.25,523.25,587.33,523.25,783.99,698.46];
+function playTune(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let t = audioCtx.currentTime;
+  notes.forEach((freq)=>{
+    const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, t); gain.gain.linearRampToValueAtTime(0.12, t+0.02); gain.gain.linearRampToValueAtTime(0, t+0.32);
+    osc.connect(gain).connect(audioCtx.destination); osc.start(t); osc.stop(t+0.34); t += 0.36;
+  });
+  tuneTimeout = setTimeout(()=>{ if(playing) playTune(); }, notes.length*360 + 500);
+}
+function stopTune(){ if(tuneTimeout) clearTimeout(tuneTimeout); }
+soundBtn.addEventListener('click', ()=>{
+  playing = !playing; soundBtn.setAttribute('aria-pressed', playing);
+  if(playing){ soundLabel.textContent = 'sound: on'; soundBtn.firstChild.textContent = '🔊 '; playTune(); }
+  else { soundLabel.textContent = 'sound: off'; soundBtn.firstChild.textContent = '🔈 '; stopTune(); }
+});
+</script>
+</body>
+</html>
+
+</body></html>
