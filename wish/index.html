@@ -64,11 +64,21 @@ footer a{color:var(--gold);font-weight:800;cursor:pointer;text-decoration:underl
 .box input:focus{outline:2px solid var(--gold)}
 .row{display:flex;gap:10px;margin-top:18px}.row .btn{flex:1;padding:13px 10px}
 #msg{margin-top:12px;font-size:.88rem;min-height:1.2em}
+.music{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:5;border:1px solid rgba(255,255,255,.35);background:rgba(42,10,58,.7);color:#fff;border-radius:99px;padding:9px 15px;font:700 .85rem 'Nunito',sans-serif;cursor:pointer;backdrop-filter:blur(8px)}
+.gifts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.gift{font-size:52px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:14px 0;cursor:pointer;transition:transform .2s}
+.gift:hover{transform:scale(1.07) rotate(-3deg)}.gift.open{animation:pop .6s}
+#giftMsg,#predMsg{margin-top:14px;min-height:3.4em;line-height:1.7;font-weight:600}
+#arena{position:relative;height:270px;border-radius:18px;background:rgba(0,0,0,.25);overflow:hidden;margin:12px 0;touch-action:manipulation}
+.bl{position:absolute;bottom:-60px;font-size:46px;cursor:pointer;user-select:none;animation:rise2 linear forwards}
+@keyframes rise2{to{transform:translateY(-340px)}}
+.sc{display:flex;justify-content:space-between;font-weight:800}.sc span{color:var(--gold)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
 <canvas id="fx"></canvas>
+<button class="music" id="music" aria-pressed="false">🎵 Music: off</button>
 
 <div class="wrap">
 
@@ -118,6 +128,29 @@ footer a{color:var(--gold);font-weight:800;cursor:pointer;text-decoration:underl
     </div>
 
     <div class="card">
+      <h2>🎁 3 Gifts, sirf ek tap door</h2>
+      <p>Koi bhi dabba kholo, andar kya hai woh surprise hai!</p>
+      <div class="gifts"><div class="gift" data-i="0">🎁</div><div class="gift" data-i="1">🎁</div><div class="gift" data-i="2">🎁</div></div>
+      <div id="giftMsg"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎈 Balloon Pop Challenge</h2>
+      <p>30 second mein jitne balloons phoot saken phoda karo!</p>
+      <div class="sc"><div>Score: <span id="score">0</span></div><div>Time: <span id="timer">30</span>s</div></div>
+      <div id="arena"></div>
+      <button class="btn" id="startG">▶ Game Shuru Karo</button>
+      <p id="gameRes" style="margin-top:12px;font-weight:700"></p>
+    </div>
+
+    <div class="card">
+      <h2>🔮 Tumhara Birthday Prediction</h2>
+      <p>Statistics wali ho, to prediction bhi data se hi milegi 😎</p>
+      <button class="btn" id="predBtn" style="margin-top:12px">Prediction Nikalo</button>
+      <div id="predMsg"></div>
+    </div>
+
+    <div class="card">
       <h2>Ab cake ka time! 🕯️</h2>
       <p style="margin-bottom:10px">Dil mein wish maango aur candles bujhao (mera hissa bhi mangna, sharing is caring)</p>
       <span class="cake" id="cake">🎂</span><br>
@@ -158,8 +191,7 @@ footer a{color:var(--gold);font-weight:800;cursor:pointer;text-decoration:underl
 /* ===== SETTINGS (yahan change karein) ===== */
 const HER_NAME   = "Meri Bestie";                 // <-- Uska naam yahan likhein, e.g. "Ayesha"
 const BIRTHDAY   = new Date(2026, 9, 29, 0, 0, 0); // 29 Oct 2026, raat 12:00 baje
-const OWNER_EMAIL = "ashfaqprogrammer@gmail.com";             // <-- Apni email yahan likhein (leads yahin aayengi)
-const OWNER_WA   = "923XXXXXXXXX";                // aap ka WhatsApp number (92 ke sath, bina + ke)
+const OWNER_EMAIL = "ashfaqprogrammer@gmail.com"; // leads is email par aayengi
 /* ========================================= */
 
 const q = new URLSearchParams(location.search);
@@ -261,6 +293,76 @@ $('blow').onclick = function(){
   $('final').scrollIntoView({behavior:'smooth', block:'center'});
 };
 
+/* gifts */
+const gifts = [
+  ["🍫","Chocolate ka virtual dabba! Asli wala maango to treat dena meri zimmedari hai (mera budget bhi sath dua mein rakhna) 😂"],
+  ["💌","Zindagi bhar ka free tech-support + free kandha + free sunne wala dost. Terms and conditions: hamesha mujhe treat dena 😜"],
+  ["🏆","Congratulations! Aap ko 'World's Best Bestie 2026' ka award mil gaya hai. Trophy ki jagah sirf yeh emoji milega 🏆😅"]
+];
+document.querySelectorAll('.gift').forEach((g,k) => g.onclick = () => {
+  const it = gifts[k]; g.textContent = it[0]; g.classList.add('open');
+  $('giftMsg').textContent = it[1]; const r = g.getBoundingClientRect(); burst(r.left + r.width/2, r.top, 60);
+});
+
+/* balloon game */
+let sc = 0, tm = 30, gI, sI, run = false;
+function spawnBl(){
+  if(!run) return;
+  const b = document.createElement('div'); b.className = 'bl';
+  b.textContent = ['🎈','🎈','💖','🎉'][Math.floor(Math.random()*4)];
+  b.style.left = Math.random()*(arena.clientWidth-50) + 'px';
+  const d = 2.2 + Math.random()*1.8; b.style.animationDuration = d + 's';
+  const pop = e => { e.preventDefault(); if(!run) return; sc++; $('score').textContent = sc;
+    const r = b.getBoundingClientRect(); burst(r.left+20, r.top+20, 14); b.remove(); };
+  b.addEventListener('pointerdown', pop);
+  arena.appendChild(b); setTimeout(() => b.remove(), d*1000);
+}
+const arena = $('arena');
+$('startG').onclick = function(){
+  if(run) return; run = true; sc = 0; tm = 30; arena.innerHTML = '';
+  $('score').textContent = 0; $('timer').textContent = 30; $('gameRes').textContent = ''; this.disabled = true;
+  sI = setInterval(spawnBl, 480);
+  gI = setInterval(() => { tm--; $('timer').textContent = tm; if(tm <= 0) endGame(); }, 1000);
+};
+function endGame(){
+  run = false; clearInterval(sI); clearInterval(gI); $('startG').disabled = false; $('startG').textContent = '🔁 Dobara Khelo';
+  const t = sc >= 30 ? 'Legend! Tum to statistics ki topper ho aur balloon-popping ki bhi 👑' : sc >= 15 ? 'Zabardast! Reflexes bilkul normal distribution ke peak par 🎯' : 'Koi baat nahi, birthday girl ko jeetna zaroori nahi, cake khana zaroori hai 🍰';
+  $('gameRes').textContent = 'Final score: ' + sc + '. ' + t; burst(innerWidth/2, innerHeight/2, 120);
+}
+
+/* prediction */
+const preds = [
+  "Is saal tumhari happiness ka trend upward hoga, aur confidence interval mein sirf khushiyan aayengi 📈",
+  "Ek achi khabar aane ki probability 97% hai. Baaki 3% mein mera treat maangna shamil hai 😂",
+  "Exams mein marks ka mean tumhare target se upar nikle ga, outliers sirf Ammi ke pyar ke honge 🎓",
+  "Tumhe is saal itna pyar milega ke sample size bhi chhota padh jayega 💞",
+  "Next birthday tak tumhari cuteness ka forecast: strongly increasing, R² = 0.99 ✨",
+  "Predicted: kisi ne ghalti se sab se zyada khana tumhari taraf se kharid liya jayega. Probability 100% (mere pocket se) 🍕"
+];
+let pi = 0;
+$('predBtn').onclick = () => { $('predMsg').textContent = preds[pi++ % preds.length]; burst(innerWidth/2, innerHeight/2, 50); };
+
+/* happy birthday music (WebAudio, koi file nahi) */
+const song = [[392,.4],[392,.2],[440,.6],[392,.6],[523.25,.6],[493.88,1.1],[392,.4],[392,.2],[440,.6],[392,.6],[587.33,.6],[523.25,1.1],
+  [392,.4],[392,.2],[783.99,.6],[659.25,.6],[523.25,.6],[493.88,.6],[440,1],[698.46,.4],[698.46,.2],[659.25,.6],[523.25,.6],[587.33,.6],[523.25,1.4]];
+let ac = null, mOn = false, mT = null;
+function playSong(){
+  if(!ac) ac = new (window.AudioContext || window.webkitAudioContext)();
+  let t = ac.currentTime + .05;
+  song.forEach(([f,d]) => {
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'triangle'; o.frequency.value = f;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.16,t+.03); g.gain.linearRampToValueAtTime(0,t+d*.95);
+    o.connect(g).connect(ac.destination); o.start(t); o.stop(t+d); t += d;
+  });
+  mT = setTimeout(() => { if(mOn) playSong(); }, (t - ac.currentTime + 1.2)*1000);
+}
+$('music').onclick = function(){
+  mOn = !mOn; this.setAttribute('aria-pressed', mOn);
+  this.textContent = mOn ? '🎵 Music: on' : '🎵 Music: off';
+  if(mOn) playSong(); else clearTimeout(mT);
+};
+
 /* form modal */
 const modal = $('modal');
 $('openForm').onclick = () => { modal.classList.add('open'); $('nm').focus(); };
@@ -275,20 +377,17 @@ $('leadForm').addEventListener('submit', async e => {
   if(!nm || !wa){ msg.textContent = 'Naam aur WhatsApp number zaroori hain.'; return; }
   btn.disabled = true; msg.textContent = 'Bhej rahe hain...';
   try{
-    if(OWNER_EMAIL === 'ashfaqprogrammer@gmail.com') throw new Error('noemail');
-    const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(OWNER_EMAIL), {
+    const res = await fetch('https://formsubmit.co/ajax/' + OWNER_EMAIL, {
       method:'POST', headers:{'Content-Type':'application/json', Accept:'application/json'},
       body: JSON.stringify({name:nm, whatsapp:wa, _subject:'Naya Birthday Surprise Lead', _captcha:'false', _template:'table'})
     });
     const data = await res.json();
-    if(String(data.success) !== 'true') throw new Error('fail');
+    if(String(data.success) !== 'true') throw new Error(data.message || 'fail');
     msg.textContent = '✅ Shukriya ' + nm + '! Hum jald WhatsApp par rabta karenge.';
-    $('leadForm').reset();
+    $('leadForm').reset(); burst(innerWidth/2, innerHeight/2, 90);
   }catch(err){
-    /* fallback: WhatsApp par message khul jayega */
-    const text = encodeURIComponent('Salam! Mujhe birthday surprise page banwana hai.\nNaam: ' + nm + '\nWhatsApp: ' + wa);
-    msg.textContent = 'WhatsApp khul raha hai, wahan "Send" dabayein 💬';
-    window.open('https://wa.me/' + OWNER_WA + '?text=' + text, '_blank');
+    msg.textContent = '⚠️ Submit nahi ho saka, internet check karke dobara koshish karein.';
+    console.error(err);
   }
   btn.disabled = false;
 });
