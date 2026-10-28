@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday Bestie 💞</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2a0a3a;--plum:#4b1470;--rose:#ff4f8b;--peach:#ffb199;--cream:#fff4ea;--mint:#5ef2c6;--gold:#ffd23f;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;color:#fff;min-height:100vh;overflow-x:hidden;
+ background:radial-gradient(circle at 15% 10%,#8a2be2 0,transparent 45%),radial-gradient(circle at 85% 90%,#ff4f8b 0,transparent 50%),linear-gradient(160deg,#2a0a3a,#4b1470 60%,#7a1f5c);
+ background-attachment:fixed;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:1}
+.float{position:fixed;bottom:-60px;z-index:0;pointer-events:none;animation:rise linear forwards;font-size:28px}
+@keyframes rise{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+.wrap{position:relative;z-index:2;max-width:640px;margin:0 auto;padding:44px 20px 30px;text-align:center}
+.script{font-family:'Caveat Brush',cursive}
+h1{font-family:'Caveat Brush',cursive;font-weight:400;font-size:clamp(2.6rem,12vw,4.8rem);line-height:1.05;margin:10px 0;
+ background:linear-gradient(90deg,var(--gold),var(--peach),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 18px rgba(255,79,139,.5))}
+.cur{display:inline-block;width:4px;height:.9em;background:var(--gold);margin-left:4px;vertical-align:-.1em;animation:bl .8s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.sub{opacity:.9;line-height:1.7;margin:6px auto 26px;max-width:460px}
+.card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);border-radius:22px;padding:26px 22px;margin-bottom:26px;backdrop-filter:blur(10px)}
+.card h2{font-family:'Caveat Brush',cursive;font-weight:400;font-size:1.9rem;margin-bottom:10px;color:var(--gold)}
+.card p{line-height:1.85;opacity:.95}
+.btn{border:0;cursor:pointer;font:800 1rem 'Nunito',sans-serif;color:var(--ink);padding:14px 30px;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--peach));box-shadow:0 10px 26px rgba(255,210,63,.3);transition:transform .15s}
+.btn:hover{transform:translateY(-2px) scale(1.03)}.btn:active{transform:scale(.97)}.btn:disabled{opacity:.6;cursor:default}
+.btn.ghost{background:none;color:#fff;border:1.5px solid rgba(255,255,255,.5);box-shadow:none}
+/* countdown */
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:420px;margin:0 auto 22px}
+.cd div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:16px;padding:14px 4px}
+.cd b{display:block;font-size:clamp(1.5rem,7vw,2.1rem);color:var(--gold)}.cd span{font-size:.7rem;opacity:.8}
+.big{font-size:84px;animation:bob 2.2s ease-in-out infinite;display:block}
+@keyframes bob{50%{transform:translateY(-12px) rotate(4deg)}}
+/* stats bars */
+.bar{text-align:left;margin:14px 0}.bar small{display:flex;justify-content:space-between;font-weight:600;margin-bottom:5px}
+.bar i{display:block;height:11px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden}
+.bar i u{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--mint),var(--gold),var(--rose));transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+.hyp{font-family:ui-monospace,Menlo,monospace;font-size:.85rem;text-align:left;line-height:2;background:rgba(0,0,0,.25);border-radius:14px;padding:16px;margin-top:16px}
+.hyp em{color:var(--mint);font-style:normal}.hyp strong{color:var(--gold)}
+/* jokes */
+.joke{min-height:130px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;line-height:1.7;font-weight:600;cursor:pointer;user-select:none}
+.dots{display:flex;gap:4px;margin-bottom:14px}.dots i{flex:1;height:4px;border-radius:9px;background:rgba(255,255,255,.18)}.dots i.on{background:var(--gold)}
+/* cake */
+.cake{font-size:96px;position:relative;display:inline-block;transition:transform .4s}
+.cake.out{animation:pop .6s}
+@keyframes pop{40%{transform:scale(1.3) rotate(-6deg)}}
+.final{display:none}.final.show{display:block;animation:up .7s ease}
+@keyframes up{from{opacity:0;transform:translateY(20px)}}
+.hide{display:none}
+footer{margin-top:34px;padding-top:22px;border-top:1px solid rgba(255,255,255,.2);font-size:.9rem;opacity:.95;line-height:1.8}
+footer a{color:var(--gold);font-weight:800;cursor:pointer;text-decoration:underline}
+/* modal */
+#modal{position:fixed;inset:0;z-index:10;background:rgba(10,0,20,.75);display:none;align-items:center;justify-content:center;padding:18px}
+#modal.open{display:flex}
+.box{background:linear-gradient(160deg,#4b1470,#2a0a3a);border:1px solid rgba(255,255,255,.25);border-radius:22px;padding:26px 22px;width:100%;max-width:400px;text-align:left}
+.box h3{font-family:'Caveat Brush',cursive;font-weight:400;font-size:1.8rem;color:var(--gold);margin-bottom:6px}
+.box p{font-size:.88rem;opacity:.85;margin-bottom:14px}
+.box label{display:block;font-weight:700;font-size:.85rem;margin:10px 0 5px}
+.box input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font:600 1rem 'Nunito',sans-serif}
+.box input:focus{outline:2px solid var(--gold)}
+.row{display:flex;gap:10px;margin-top:18px}.row .btn{flex:1;padding:13px 10px}
+#msg{margin-top:12px;font-size:.88rem;min-height:1.2em}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+
+<div class="wrap">
+
+  <!-- COUNTDOWN VIEW -->
+  <section id="waitView">
+    <span class="big">🎁</span>
+    <h1><span id="t1"></span><span class="cur"></span></h1>
+    <p class="sub">Shhh... surprise abhi packing mein hai. Raat <b>12 bajte hi</b> ye page khud khul jayega. Tab tak sabar (statistics mein isay "waiting time distribution" kehte hain 😌)</p>
+    <div class="cd">
+      <div><b id="d">00</b><span>DIN</span></div><div><b id="h">00</b><span>GHANTE</span></div>
+      <div><b id="m">00</b><span>MINUTE</span></div><div><b id="s">00</b><span>SECOND</span></div>
+    </div>
+    <button class="btn ghost" id="peek">👀 Phir bhi dekhna hai?</button>
+    <p class="sub" id="peekMsg" style="margin-top:18px"></p>
+  </section>
+
+  <!-- BIRTHDAY VIEW -->
+  <section id="bdayView" class="hide">
+    <span class="big">🎂</span>
+    <h1><span id="t2"></span><span class="cur"></span></h1>
+    <p class="sub">Aaj poori dunya ko yaad dilana hai ke <b class="herName">Meri Bestie</b> jaisi dost bohot kam milti hai. Aur haan, ye meri personal statistically-proven opinion hai 📊💞</p>
+
+    <div class="card">
+      <h2>Dil se, sirf tumhare liye 💌</h2>
+      <p>Bachpan se aaj tak, tum meri woh dost ho jo mere har mood ko bina bataye samajh leti ho. Funny moments mein sabse zyada hansi tumhari, aur serious moments mein sabse pehla kandha bhi tumhara. Tum meri love ho, meri pehli dost, meri safe place. Allah tumhe har khushi, kamyabi aur bohot saari mithai de. Aur statistics mein toh full marks ho hi, bas hamesha aise hi muskurati rehna 💞</p>
+      <p class="script" style="font-size:1.5rem;color:var(--peach);margin-top:12px">— tumhara/tumhari hamesha wala dost</p>
+    </div>
+
+    <div class="card" id="stats">
+      <h2>📊 Official Dosti Report</h2>
+      <div class="bar"><small><span>Hamari dosti ki Mean (average)</span><span>100%</span></small><i><u data-w="100"></u></i></div>
+      <div class="bar"><small><span>Tumhare nakhray (outlier detected 🚨)</span><span>99.9%</span></small><i><u data-w="99"></u></i></div>
+      <div class="bar"><small><span>Meri sunne ki aadat (tumhari bakwaas par)</span><span>87%</span></small><i><u data-w="87"></u></i></div>
+      <div class="bar"><small><span>Tumhari cuteness (p-value &lt; 0.05)</span><span>∞</span></small><i><u data-w="100"></u></i></div>
+      <div class="hyp">
+        <em>H₀:</em> <span class="herName">Bestie</span> ki birthday normal din hai<br>
+        <em>H₁:</em> Aaj dunya ka sabse khaas din hai<br>
+        <em>p-value:</em> 0.0001 &nbsp;→&nbsp; <strong>H₀ REJECTED ✔</strong><br>
+        <em>Confidence level:</em> 99.99% (baaki 0.01% Ammi ki daant ka risk)
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="dots" id="dots"></div>
+      <div class="joke" id="joke"></div>
+      <button class="btn" id="nextJ" style="margin-top:12px">Agla joke 😂</button>
+    </div>
+
+    <div class="card">
+      <h2>Ab cake ka time! 🕯️</h2>
+      <p style="margin-bottom:10px">Dil mein wish maango aur candles bujhao (mera hissa bhi mangna, sharing is caring)</p>
+      <span class="cake" id="cake">🎂</span><br>
+      <button class="btn" id="blow" style="margin-top:14px">🕯️ Candles Bujhao</button>
+      <div class="final" id="final">
+        <p class="script" style="font-size:2rem;color:var(--gold);margin-top:22px">Wish ho gayi note! 🎉</p>
+        <p style="margin-top:8px">Standard deviation of khushi is saal zero ho, matlab sirf khushiyan hi khushiyan. Happy Birthday, <b class="herName">Meri Bestie</b> 💞🎂 Cake mera hissa bacha ke rakhna, warna legal notice aa jayega ⚖️😜</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Apne kisi dost ke liye aisa surprise banwana hai? 🎁<br>
+    <a id="openForm">Yahan click karein aur details bhejein</a>
+  </footer>
+</div>
+
+<!-- FORM MODAL -->
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="ft">
+  <div class="box">
+    <h3 id="ft">Apna Surprise Banwayein 🎉</h3>
+    <p>Naam aur WhatsApp number likhein, hum aap se rabta karenge.</p>
+    <form id="leadForm">
+      <label for="nm">Aap ka naam</label>
+      <input id="nm" name="name" required placeholder="Naam" autocomplete="name">
+      <label for="wa">WhatsApp number</label>
+      <input id="wa" name="whatsapp" required type="tel" inputmode="tel" placeholder="03XX XXXXXXX" pattern="[0-9+\s\-]{10,16}" autocomplete="tel">
+      <div class="row">
+        <button type="button" class="btn ghost" id="closeForm">Band karein</button>
+        <button type="submit" class="btn" id="sendBtn">Submit 🚀</button>
+      </div>
+      <div id="msg"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ===== SETTINGS (yahan change karein) ===== */
+const HER_NAME   = "Meri Bestie";                 // <-- Uska naam yahan likhein, e.g. "Ayesha"
+const BIRTHDAY   = new Date(2026, 9, 29, 0, 0, 0); // 29 Oct 2026, raat 12:00 baje
+const OWNER_EMAIL = "your@email.com";             // <-- Apni email yahan likhein (leads yahin aayengi)
+const OWNER_WA   = "923XXXXXXXXX";                // aap ka WhatsApp number (92 ke sath, bina + ke)
+/* ========================================= */
+
+const q = new URLSearchParams(location.search);
+const name = q.get('name') || HER_NAME;
+document.querySelectorAll('.herName').forEach(e => e.textContent = name);
+const $ = id => document.getElementById(id);
+const unlocked = Date.now() >= BIRTHDAY.getTime() || q.get('unlock') === '1';
+$('waitView').classList.toggle('hide', unlocked);
+$('bdayView').classList.toggle('hide', !unlocked);
+
+function type(el, text, speed){let i=0;(function s(){el.textContent=text.slice(0,i++);if(i<=text.length)setTimeout(s,speed)})()}
+type($('t1'), "Kuch khaas aa raha hai... 🎁", 70);
+type($('t2'), "Happy Birthday " + name + " 💞", 80);
+
+/* countdown */
+function tick(){
+  const diff = BIRTHDAY - Date.now();
+  if(diff <= 0){ if(!unlocked) location.reload(); return; }
+  const p = n => String(n).padStart(2,'0');
+  $('d').textContent = p(Math.floor(diff/864e5));
+  $('h').textContent = p(Math.floor(diff/36e5)%24);
+  $('m').textContent = p(Math.floor(diff/6e4)%60);
+  $('s').textContent = p(Math.floor(diff/1e3)%60);
+}
+if(!unlocked){ tick(); setInterval(tick, 1000); }
+
+const peekLines = [
+  "Itni jaldi? Sabar ka phal meetha hota hai, cake ka bhi 🎂",
+  "Error 404: Surprise abhi loading hai. Please 12 baje tak intezar karein.",
+  "Statistics ke mutabiq jaldi karne wale ka surprise kharab hone ka chance 95% hai 📉",
+  "Bas kar do, ye button dabane se time tez nahi chalega 😂"
+];
+let pk = 0;
+$('peek').onclick = () => { $('peekMsg').textContent = peekLines[pk++ % peekLines.length]; burst(innerWidth/2, innerHeight/2, 40); };
+
+/* floating hearts/balloons */
+const icons = ['💞','🎈','💖','🎉','✨','🎂','🩷'];
+function floater(){
+  const e = document.createElement('div');
+  e.className = 'float'; e.textContent = icons[Math.floor(Math.random()*icons.length)];
+  e.style.left = Math.random()*95 + 'vw';
+  const dur = 7 + Math.random()*6;
+  e.style.animationDuration = dur + 's';
+  e.style.fontSize = (22 + Math.random()*22) + 'px';
+  document.body.appendChild(e); setTimeout(() => e.remove(), dur*1000);
+}
+setInterval(floater, 700);
+
+/* confetti */
+const cv = $('fx'), cx = cv.getContext('2d'); let parts = [];
+function rs(){cv.width = innerWidth; cv.height = innerHeight} rs(); addEventListener('resize', rs);
+const cols = ['#ffd23f','#ff4f8b','#5ef2c6','#fff4ea','#ffb199'];
+function burst(x,y,n){
+  for(let i=0;i<n;i++) parts.push({x,y,vx:(Math.random()-.5)*12,vy:Math.random()*-11-2,s:Math.random()*7+4,c:cols[i%cols.length],r:Math.random()*6,vr:(Math.random()-.5)*.4,l:0});
+}
+(function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{p.vy+=.28;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.l++;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.restore()});
+  parts = parts.filter(p => p.l < 160 && p.y < cv.height + 30);
+  requestAnimationFrame(loop);
+})();
+if(unlocked){ setTimeout(()=>{burst(innerWidth/2, innerHeight/3, 140)}, 500); }
+
+/* stats bars animate on view */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.querySelectorAll('u').forEach(u => u.style.width = u.dataset.w + '%'); io.unobserve(e.target); }
+}), {threshold:.3});
+io.observe($('stats'));
+
+/* jokes */
+const jokes = [
+  "Tum statistics parh rahi ho, matlab data ke saath relationship rakhti ho. Mere saath wala relationship bhi 100% reliable hai 😌",
+  "Tumhari aur meri dosti ka correlation +1 hai. Aur jo isay negative kehta hai woh sample hi galat hai 📈",
+  "Tum itni qeemti ho ke teachers bhi tumhein outlier samajh ke alag rakhte honge 😂",
+  "Exam ke din tumhari tension ka standard deviation bohot high hota hai, aur main hi mean banke tumhe sambhalta hoon 😅",
+  "Tum bachpan se mere saath ho. Itna lamba sample size toh kisi research mein bhi nahi milta 🧪",
+  "Tumhari hansi sunne ke liye main apni izzat ka margin of error bhi qurbaan kar deta hoon 😜",
+  "Tumhari pasand ka khana aur meri jeb ka budget: negative correlation, par phir bhi treat tumhari pakki 🍕",
+  "Agar tum kabhi gussa ho jao toh main sirf ek hypothesis bolunga: 'Sorry' accept hogi ya nahi? p-value dekhte hain 😂",
+  "Tum itni cute ho ke normal distribution ki bell curve bhi tumhein dekh kar jhuk jati hai 🔔",
+  "Happy Birthday! Aaj tumhari umr ka ek aur data point add ho gaya, lekin tumhari cuteness ka trend ab bhi increasing hai 🎈"
+];
+let j = 0;
+const dots = $('dots'); jokes.forEach(()=>dots.appendChild(document.createElement('i')));
+function showJ(){ $('joke').textContent = jokes[j]; [...dots.children].forEach((d,i)=>d.classList.toggle('on', i<=j)); }
+function nextJ(){ j = (j+1) % jokes.length; showJ(); }
+showJ(); $('nextJ').onclick = nextJ; $('joke').onclick = nextJ;
+
+/* cake */
+$('blow').onclick = function(){
+  this.disabled = true; this.textContent = '🎉 Wish ho gayi!';
+  $('cake').textContent = '🍰'; $('cake').classList.add('out');
+  const r = $('cake').getBoundingClientRect();
+  burst(r.left + r.width/2, r.top, 160);
+  setTimeout(()=>burst(innerWidth*.2, innerHeight*.6, 70), 400);
+  setTimeout(()=>burst(innerWidth*.8, innerHeight*.6, 70), 700);
+  $('final').classList.add('show');
+  $('final').scrollIntoView({behavior:'smooth', block:'center'});
+};
+
+/* form modal */
+const modal = $('modal');
+$('openForm').onclick = () => { modal.classList.add('open'); $('nm').focus(); };
+$('closeForm').onclick = () => modal.classList.remove('open');
+modal.addEventListener('click', e => { if(e.target === modal) modal.classList.remove('open'); });
+addEventListener('keydown', e => { if(e.key === 'Escape') modal.classList.remove('open'); });
+
+$('leadForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const nm = $('nm').value.trim(), wa = $('wa').value.trim();
+  const msg = $('msg'), btn = $('sendBtn');
+  if(!nm || !wa){ msg.textContent = 'Naam aur WhatsApp number zaroori hain.'; return; }
+  btn.disabled = true; msg.textContent = 'Bhej rahe hain...';
+  try{
+    if(OWNER_EMAIL === 'ashfaqprogrammer@gmail.com') throw new Error('noemail');
+    const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(OWNER_EMAIL), {
+      method:'POST', headers:{'Content-Type':'application/json', Accept:'application/json'},
+      body: JSON.stringify({name:nm, whatsapp:wa, _subject:'Naya Birthday Surprise Lead', _captcha:'false', _template:'table'})
+    });
+    const data = await res.json();
+    if(String(data.success) !== 'true') throw new Error('fail');
+    msg.textContent = '✅ Shukriya ' + nm + '! Hum jald WhatsApp par rabta karenge.';
+    $('leadForm').reset();
+  }catch(err){
+    /* fallback: WhatsApp par message khul jayega */
+    const text = encodeURIComponent('Salam! Mujhe birthday surprise page banwana hai.\nNaam: ' + nm + '\nWhatsApp: ' + wa);
+    msg.textContent = 'WhatsApp khul raha hai, wahan "Send" dabayein 💬';
+    window.open('https://wa.me/' + OWNER_WA + '?text=' + text, '_blank');
+  }
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>
